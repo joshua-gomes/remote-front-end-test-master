@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import './App.scss';
 import Header from '../Header';
 import SortAndFilter from '../SortAndFilter';
 import PropertyListing from '../PropertyListing';
+import LoadingState from '../LoadingState';
 
 const App = () => {
     return (
@@ -10,7 +11,9 @@ const App = () => {
             <Header />
             <main>
                 <SortAndFilter />
-                <PropertyListing />
+                <Suspense fallback={<LoadingState />}>
+                    <PropertyListing />
+                </Suspense>
             </main>
         </div>
     );
