@@ -2,8 +2,6 @@ import React, { Suspense, useEffect, useState } from 'react';
 import PropertyCard from '../PropertyCard';
 import './PropertyListing.scss';
 
-const API_URL = import.meta.env.API_URL;
-
 const PropertyListing = () => {
     const [properties, setProperties] = useState([]);
     const [error, setError] = useState('');
@@ -11,7 +9,7 @@ const PropertyListing = () => {
     useEffect(() => {
         (async () => {
             try {
-                const res = await fetch(`${API_URL}/api/properties`);
+                const res = await fetch(`http://localhost:3000/api/properties`);
                 const properties = await res.json();
 
                 setProperties(properties);
