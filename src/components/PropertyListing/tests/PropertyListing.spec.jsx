@@ -1,5 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
+import nock from 'nock';
 import { within } from '@testing-library/dom';
 import PropertyListing from '../PropertyListing';
 
@@ -18,16 +19,7 @@ const DUMMY_PROPERTY = {
         'https://media.rightmove.co.uk/dir/crop/10:9-16:9/38k/37655/53588679/37655_CAM170036_IMG_01_0000_max_476x317.jpg',
 };
 
-/**
- * Mocked fetch to return properties from api call.
- * I would usually use a mocking library like wiremock-rest-client to stub an api, but for the purpose of setting this up quick
- * I have just mocked the resolved value for fetch.
- **/
-global.fetch = jest.fn(() =>
-    Promise.resolve({
-        json: () => Promise.resolve(Array(5).fill(DUMMY_PROPERTY)),
-    })
-);
+nock('http://localhost:3000').get('/api/properties').reply(200, Array(5).fill(DUMMY_PROPERTY));
 
 describe('PropertyListing', () => {
     it('should render five property cards', async () => {
